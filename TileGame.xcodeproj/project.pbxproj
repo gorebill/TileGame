@@ -139,6 +139,14 @@
 		1B421BD816D36CA50086C7C3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B421BD716D36CA50086C7C3 /* AppDelegate.m */; };
 		1B421BDB16D36CA50086C7C3 /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B421BDA16D36CA50086C7C3 /* HelloWorldLayer.m */; };
 		1B421BDE16D36CA50086C7C3 /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B421BDD16D36CA50086C7C3 /* IntroLayer.m */; };
+		1B421BEB16D36D010086C7C3 /* hit.caf in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BE416D36D010086C7C3 /* hit.caf */; };
+		1B421BEC16D36D010086C7C3 /* meta_tiles.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BE516D36D010086C7C3 /* meta_tiles.png */; };
+		1B421BED16D36D010086C7C3 /* move.caf in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BE616D36D010086C7C3 /* move.caf */; };
+		1B421BEE16D36D010086C7C3 /* pickup.caf in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BE716D36D010086C7C3 /* pickup.caf */; };
+		1B421BEF16D36D010086C7C3 /* Player.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BE816D36D010086C7C3 /* Player.png */; };
+		1B421BF016D36D010086C7C3 /* TileMap.caf in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BE916D36D010086C7C3 /* TileMap.caf */; };
+		1B421BF116D36D010086C7C3 /* tmw_desert_spacing.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BEA16D36D010086C7C3 /* tmw_desert_spacing.png */; };
+		1B421BF316D3745F0086C7C3 /* TileMap.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BF216D3745F0086C7C3 /* TileMap.tmx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -420,6 +428,14 @@
 		1B421BDA16D36CA50086C7C3 /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
 		1B421BDC16D36CA50086C7C3 /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		1B421BDD16D36CA50086C7C3 /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
+		1B421BE416D36D010086C7C3 /* hit.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = hit.caf; path = Resources/hit.caf; sourceTree = "<group>"; };
+		1B421BE516D36D010086C7C3 /* meta_tiles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = meta_tiles.png; path = Resources/meta_tiles.png; sourceTree = "<group>"; };
+		1B421BE616D36D010086C7C3 /* move.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = move.caf; path = Resources/move.caf; sourceTree = "<group>"; };
+		1B421BE716D36D010086C7C3 /* pickup.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = pickup.caf; path = Resources/pickup.caf; sourceTree = "<group>"; };
+		1B421BE816D36D010086C7C3 /* Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Player.png; path = Resources/Player.png; sourceTree = "<group>"; };
+		1B421BE916D36D010086C7C3 /* TileMap.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = TileMap.caf; path = Resources/TileMap.caf; sourceTree = "<group>"; };
+		1B421BEA16D36D010086C7C3 /* tmw_desert_spacing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tmw_desert_spacing.png; path = Resources/tmw_desert_spacing.png; sourceTree = "<group>"; };
+		1B421BF216D3745F0086C7C3 /* TileMap.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = TileMap.tmx; path = Resources/TileMap.tmx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -494,6 +510,14 @@
 		1B421A4916D36CA20086C7C3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1B421BF216D3745F0086C7C3 /* TileMap.tmx */,
+				1B421BE416D36D010086C7C3 /* hit.caf */,
+				1B421BE516D36D010086C7C3 /* meta_tiles.png */,
+				1B421BE616D36D010086C7C3 /* move.caf */,
+				1B421BE716D36D010086C7C3 /* pickup.caf */,
+				1B421BE816D36D010086C7C3 /* Player.png */,
+				1B421BE916D36D010086C7C3 /* TileMap.caf */,
+				1B421BEA16D36D010086C7C3 /* tmw_desert_spacing.png */,
 				1B421A4A16D36CA20086C7C3 /* Default.png */,
 				1B421A4C16D36CA20086C7C3 /* Default@2x.png */,
 				1B421A4E16D36CA20086C7C3 /* Default-568h@2x.png */,
@@ -933,6 +957,14 @@
 				1B421A5D16D36CA20086C7C3 /* Icon@2x.png in Resources */,
 				1B421A6016D36CA30086C7C3 /* iTunesArtwork in Resources */,
 				1B421BB616D36CA50086C7C3 /* ChangeLog in Resources */,
+				1B421BEB16D36D010086C7C3 /* hit.caf in Resources */,
+				1B421BEC16D36D010086C7C3 /* meta_tiles.png in Resources */,
+				1B421BED16D36D010086C7C3 /* move.caf in Resources */,
+				1B421BEE16D36D010086C7C3 /* pickup.caf in Resources */,
+				1B421BEF16D36D010086C7C3 /* Player.png in Resources */,
+				1B421BF016D36D010086C7C3 /* TileMap.caf in Resources */,
+				1B421BF116D36D010086C7C3 /* tmw_desert_spacing.png in Resources */,
+				1B421BF316D3745F0086C7C3 /* TileMap.tmx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
