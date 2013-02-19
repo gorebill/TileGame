@@ -13,6 +13,32 @@
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
 
+#import "SimpleAudioEngine.h"
+
+
+#pragma mark - HelloWorldHud
+@implementation HelloWorldHud
+- (id) init {
+	if((self = [super init])) {
+		CGSize winSize = [[CCDirector sharedDirector] winSize];
+		label = [CCLabelTTF labelWithString:@"0" fontName:@"Verdana-Bold" fontSize:18.0];
+		label.color = ccc3(0, 0, 0);
+		int margin = 10;
+		label.position = ccp(winSize.width - (label.contentSize.width/2) - margin, label.contentSize.height/2 + margin);
+		[self addChild:label];
+	}
+	return self;
+}
+
+- (void) numCollectedChanged:(int)numCollected {
+	[label setString:[NSString stringWithFormat:@"%d", numCollected]];
+}
+
+@end
+
+
+
+
 #pragma mark - HelloWorldLayer
 
 // HelloWorldLayer implementation
@@ -22,6 +48,9 @@
 @synthesize background = _background;
 @synthesize player = _player;
 @synthesize meta = _meta;
+@synthesize foreground = _foreground;
+@synthesize numCollected = _numCollected;
+@synthesize hud = _hud;
 
 // Helper class method that creates a Scene with the HelloWorldLayer as the only child.
 +(CCScene *) scene
@@ -35,6 +64,11 @@
 	// add layer as a child to scene
 	[scene addChild: layer];
 	
+	HelloWorldHud *hud = [HelloWorldHud node];
+	[scene addChild:hud];
+	
+	layer.hud = hud;
+	
 	// return the scene
 	return scene;
 }
@@ -45,8 +79,16 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super init]) ) {
+		[[SimpleAudioEngine sharedEngine] preloadEffect:@"pickup.caf"];
+		[[SimpleAudioEngine sharedEngine] preloadEffect:@"hit.caf"];
+		[[SimpleAudioEngine sharedEngine] preloadEffect:@"move.caf"];
+		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"TileMap.caf"];
+		
+		
 		self.tileMap = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMap.tmx"];
 		self.background = [_tileMap layerNamed:@"Background"];
+		
+		self.foreground = [_tileMap layerNamed:@"Foreground"];
 		
 		self.meta = [_tileMap layerNamed:@"Meta"];
 		_meta.visible = NO;
@@ -98,7 +140,19 @@
 		if(properties) {
 			NSString *collision = [properties valueForKey:@"Collidable"];
 			if(collision && [collision compare:@"True"] == NSOrderedSame) {
+				[[SimpleAudioEngine sharedEngine] playEffect:@"hit.caf"];
 				return;
+			}
+			
+			NSString *collectable = [properties valueForKey:@"Collectable"];
+			if(collectable && [collectable compare:@"True"] == NSOrderedSame) {
+				[[SimpleAudioEngine sharedEngine] playEffect:@"pickup.caf"];
+				
+				[_meta removeTileAt:tileCoord];
+				[_foreground removeTileAt:tileCoord];
+				
+				self.numCollected++;
+				[_hud numCollectedChanged:_numCollected];
 			}
 		}
 	}
@@ -132,6 +186,8 @@
 	   playerPos.y <= (_tileMap.mapSize.height * _tileMap.tileSize.height) &&
 	   playerPos.y >= 0 &&
 	   playerPos.x >= 0) {
+		
+		[[SimpleAudioEngine sharedEngine] playEffect:@"move.caf"];
 		[self setPlayerPosition:playerPos];
 	}
 	
@@ -165,6 +221,10 @@
 	self.player = nil;
 	
 	self.meta = nil;
+	
+	self.foreground = nil;
+	
+	self.hud = nil;
 	
 	// don't forget to call "super dealloc"
 	[super dealloc];
