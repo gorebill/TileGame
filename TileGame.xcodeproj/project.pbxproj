@@ -147,6 +147,10 @@
 		1B421BF016D36D010086C7C3 /* TileMap.caf in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BE916D36D010086C7C3 /* TileMap.caf */; };
 		1B421BF116D36D010086C7C3 /* tmw_desert_spacing.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BEA16D36D010086C7C3 /* tmw_desert_spacing.png */; };
 		1B421BF316D3745F0086C7C3 /* TileMap.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BF216D3745F0086C7C3 /* TileMap.tmx */; };
+		1B421BF816D3F2090086C7C3 /* enemy1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BF416D3F2090086C7C3 /* enemy1.png */; };
+		1B421BF916D3F2090086C7C3 /* projectile-button-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BF516D3F2090086C7C3 /* projectile-button-off.png */; };
+		1B421BFA16D3F2090086C7C3 /* projectile-button-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BF616D3F2090086C7C3 /* projectile-button-on.png */; };
+		1B421BFB16D3F2090086C7C3 /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BF716D3F2090086C7C3 /* Projectile.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -436,6 +440,10 @@
 		1B421BE916D36D010086C7C3 /* TileMap.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = TileMap.caf; path = Resources/TileMap.caf; sourceTree = "<group>"; };
 		1B421BEA16D36D010086C7C3 /* tmw_desert_spacing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tmw_desert_spacing.png; path = Resources/tmw_desert_spacing.png; sourceTree = "<group>"; };
 		1B421BF216D3745F0086C7C3 /* TileMap.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = TileMap.tmx; path = Resources/TileMap.tmx; sourceTree = "<group>"; };
+		1B421BF416D3F2090086C7C3 /* enemy1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = enemy1.png; path = Resources/enemy1.png; sourceTree = "<group>"; };
+		1B421BF516D3F2090086C7C3 /* projectile-button-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "projectile-button-off.png"; path = "Resources/projectile-button-off.png"; sourceTree = "<group>"; };
+		1B421BF616D3F2090086C7C3 /* projectile-button-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "projectile-button-on.png"; path = "Resources/projectile-button-on.png"; sourceTree = "<group>"; };
+		1B421BF716D3F2090086C7C3 /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Projectile.png; path = Resources/Projectile.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -510,6 +518,10 @@
 		1B421A4916D36CA20086C7C3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1B421BF416D3F2090086C7C3 /* enemy1.png */,
+				1B421BF516D3F2090086C7C3 /* projectile-button-off.png */,
+				1B421BF616D3F2090086C7C3 /* projectile-button-on.png */,
+				1B421BF716D3F2090086C7C3 /* Projectile.png */,
 				1B421BF216D3745F0086C7C3 /* TileMap.tmx */,
 				1B421BE416D36D010086C7C3 /* hit.caf */,
 				1B421BE516D36D010086C7C3 /* meta_tiles.png */,
@@ -965,6 +977,10 @@
 				1B421BF016D36D010086C7C3 /* TileMap.caf in Resources */,
 				1B421BF116D36D010086C7C3 /* tmw_desert_spacing.png in Resources */,
 				1B421BF316D3745F0086C7C3 /* TileMap.tmx in Resources */,
+				1B421BF816D3F2090086C7C3 /* enemy1.png in Resources */,
+				1B421BF916D3F2090086C7C3 /* projectile-button-off.png in Resources */,
+				1B421BFA16D3F2090086C7C3 /* projectile-button-on.png in Resources */,
+				1B421BFB16D3F2090086C7C3 /* Projectile.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

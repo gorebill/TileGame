@@ -73,6 +73,36 @@
 	return scene;
 }
 
+// callback. starts another iteration of enemy movement
+- (void) enemyMoveFinished:(id)sender {
+	CCSprite *enemy = (CCSprite *)sender;
+	
+	[self animateEnemy:enemy];
+}
+
+// a method to move the enemy 10 pixels toward the player
+- (void) animateEnemy:(CCSprite *)enemy {
+	// speed of the enemy
+	ccTime actualDuration = 0.3;
+	
+	// rotate to face the player
+	CGPoint diff = ccpSub(_player.position, enemy.position);
+	float angleRadians = atanf((float)diff.y / (float)diff.x);
+	float angleDegrees = CC_RADIANS_TO_DEGREES(angleRadians);
+	float cocosAngle = -1 * angleDegrees;
+	if (diff.x < 0) {
+		cocosAngle += 180;
+	}
+	enemy.rotation = cocosAngle;
+	
+	// Create the actions
+	id actionMove = [CCMoveBy actionWithDuration:actualDuration position:ccpMult(ccpNormalize(ccpSub(_player.position, enemy.position)), 10)];
+	
+	id actionMoveDone = [CCCallFuncN actionWithTarget:self selector:@selector(enemyMoveFinished:)];
+	
+	[enemy runAction:[CCSequence actions:actionMove, actionMoveDone, nil]];
+}
+
 // on "init" you need to initialize your instance
 -(id) init
 {
@@ -107,6 +137,19 @@
 		[self setViewpointCenter:_player.position];
 		
 		[self addChild:_tileMap z:-1];
+		
+		
+		// iterate through objects, finding all enemy spawn points
+		// create an enemy for each one
+		for(spawnPoint in [objects objects]) {
+			if ([[spawnPoint valueForKey:@"Enemy"] intValue] == 1) {
+				x = [[spawnPoint valueForKey:@"x"] intValue];
+				y = [[spawnPoint valueForKey:@"y"] intValue];
+				[self addEnemyAtX:x y:y];
+			}
+		}
+		
+		
 
 		[self setTouchEnabled:YES];
 	}
@@ -207,6 +250,16 @@
 	CGPoint viewPoint = ccpSub(centerOfView, actualPosition);
 	self.position = viewPoint;
 	
+}
+
+- (void) addEnemyAtX:(int)x y:(int)y {
+	CCSprite *enemy = [CCSprite spriteWithFile:@"enemy1.png"];
+	enemy.position = ccp(x, y);
+	[self addChild:enemy];
+	
+	// Use our animation method and
+	// start the enemy moving toward the player
+	[self animateEnemy:enemy];
 }
 
 // on "dealloc" you need to release all your retained objects

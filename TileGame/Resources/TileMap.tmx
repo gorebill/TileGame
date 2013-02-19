@@ -23,6 +23,41 @@
  </layer>
  <objectgroup name="Objects" width="50" height="50">
   <object name="SpawnPoint" x="184" y="315" width="36" height="37"/>
+  <object name="EnemySpawn1" x="305" y="153">
+   <properties>
+    <property name="Enemy" value="1"/>
+   </properties>
+  </object>
+  <object name="EnemySpawn2" x="252" y="241">
+   <properties>
+    <property name="Enemy" value="1"/>
+   </properties>
+  </object>
+  <object name="EnemySpawn3" x="397" y="223">
+   <properties>
+    <property name="Enemy" value="1"/>
+   </properties>
+  </object>
+  <object name="EnemySpawn4" x="342" y="557">
+   <properties>
+    <property name="Enemy" value="1"/>
+   </properties>
+  </object>
+  <object name="EnemySpawn5" x="472" y="142">
+   <properties>
+    <property name="Enemy" value="1"/>
+   </properties>
+  </object>
+  <object name="EnemySpawn6" x="466" y="469">
+   <properties>
+    <property name="Enemy" value="1"/>
+   </properties>
+  </object>
+  <object name="EnemySpawn7" x="179" y="502">
+   <properties>
+    <property name="Enemy" value="1"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="Foreground" width="50" height="50">
   <data encoding="base64" compression="zlib">
