@@ -48,6 +48,12 @@
 @property (nonatomic, assign) int numCollected;
 @property (nonatomic, retain) HelloWorldHud *hud;
 
+@property (assign) int mode;
+
+@property (strong) NSMutableArray *enemies;
+@property (strong) NSMutableArray *projectiles;
+
+
 // returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;
 

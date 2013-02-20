@@ -15,11 +15,29 @@
 
 #import "SimpleAudioEngine.h"
 
+@interface HelloWorldHud()
+// if you are setting your deployment target for iOS 5.0 or later then
+// replace "unsafe_unretained" with "weak" which is then auto set to nil by
+// the runtime. Not supported before 5.0 thoug.
+@property (unsafe_unretained) HelloWorldLayer *gameLayer;
+@end
 
 #pragma mark - HelloWorldHud
 @implementation HelloWorldHud
 - (id) init {
 	if((self = [super init])) {
+		CCMenuItem *on;
+		CCMenuItem *off;
+		
+		on = [CCMenuItemImage itemWithNormalImage:@"projectile-button-on.png" selectedImage:@"projectile-button-on.png" target:nil selector:nil];
+		off = [CCMenuItemImage itemWithNormalImage:@"projectile-button-off.png" selectedImage:@"projectile-button-off.png" target:nil selector:nil];
+		
+		CCMenuItemToggle *toggleItem = [CCMenuItemToggle itemWithTarget:self selector:@selector(projectileButtonTapped:) items:off, on, nil];
+		CCMenu *toggleMenu = [CCMenu menuWithItems:toggleItem, nil];
+		toggleMenu.position = ccp(100, 32);
+		[self addChild:toggleMenu];
+		
+		
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		label = [CCLabelTTF labelWithString:@"0" fontName:@"Verdana-Bold" fontSize:18.0];
 		label.color = ccc3(0, 0, 0);
@@ -28,6 +46,14 @@
 		[self addChild:label];
 	}
 	return self;
+}
+
+- (void) projectileButtonTapped:(id)sender {
+	if(_gameLayer.mode == 1) {
+		_gameLayer.mode = 0;
+	}else{
+		_gameLayer.mode = 1;
+	}
 }
 
 - (void) numCollectedChanged:(int)numCollected {
@@ -68,6 +94,7 @@
 	[scene addChild:hud];
 	
 	layer.hud = hud;
+	hud.gameLayer = layer;
 	
 	// return the scene
 	return scene;
@@ -113,6 +140,12 @@
 		[[SimpleAudioEngine sharedEngine] preloadEffect:@"hit.caf"];
 		[[SimpleAudioEngine sharedEngine] preloadEffect:@"move.caf"];
 		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"TileMap.caf"];
+		
+		_mode = 0;
+		
+		self.enemies = [[NSMutableArray alloc] init];
+		self.projectiles = [[NSMutableArray alloc] init];
+		[self schedule:@selector(testCollisions:)];
 		
 		
 		self.tileMap = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMap.tmx"];
@@ -205,36 +238,89 @@
 }
 
 - (void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
-	CGPoint touchLocation = [touch locationInView:[touch view]];
-	touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
-	touchLocation = [self convertToNodeSpace:touchLocation];
 	
-	CGPoint playerPos = _player.position;
-	CGPoint diff = ccpSub(touchLocation, playerPos);
-	if(abs(diff.x) >abs(diff.y)) {
-		if(diff.x > 0) {
-			playerPos.x += _tileMap.tileSize.width;
-		} else {
-			playerPos.x -= _tileMap.tileSize.width;
-		}
-	}else{
-		if(diff.y > 0) {
-			playerPos.y += _tileMap.tileSize.height;
-		}else {
-			playerPos.y -= _tileMap.tileSize.height;
-		}
-	}
-	
-	if(playerPos.x <= (_tileMap.mapSize.width * _tileMap.tileSize.width) &&
-	   playerPos.y <= (_tileMap.mapSize.height * _tileMap.tileSize.height) &&
-	   playerPos.y >= 0 &&
-	   playerPos.x >= 0) {
+	if(_mode == 0) {		
+		CGPoint touchLocation = [touch locationInView:[touch view]];
+		touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
+		touchLocation = [self convertToNodeSpace:touchLocation];
 		
-		[[SimpleAudioEngine sharedEngine] playEffect:@"move.caf"];
-		[self setPlayerPosition:playerPos];
+		CGPoint playerPos = _player.position;
+		CGPoint diff = ccpSub(touchLocation, playerPos);
+		if(abs(diff.x) >abs(diff.y)) {
+			if(diff.x > 0) {
+				playerPos.x += _tileMap.tileSize.width;
+			} else {
+				playerPos.x -= _tileMap.tileSize.width;
+			}
+		}else{
+			if(diff.y > 0) {
+				playerPos.y += _tileMap.tileSize.height;
+			}else {
+				playerPos.y -= _tileMap.tileSize.height;
+			}
+		}
+		
+		if(playerPos.x <= (_tileMap.mapSize.width * _tileMap.tileSize.width) &&
+		   playerPos.y <= (_tileMap.mapSize.height * _tileMap.tileSize.height) &&
+		   playerPos.y >= 0 &&
+		   playerPos.x >= 0) {
+			
+			[[SimpleAudioEngine sharedEngine] playEffect:@"move.caf"];
+			[self setPlayerPosition:playerPos];
+		}
+		
+		[self setViewpointCenter:_player.position];
+	}else {
+		// code to throw ninja stars will go here
+		
+		// Find where the touch is
+		CGPoint touchLocation = [touch locationInView:[touch view]];
+		touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
+		touchLocation = [self convertToNodeSpace:touchLocation];
+		
+		// Create a projectile and put it at the player's location
+		CCSprite *projectile = [CCSprite spriteWithFile:@"Projectile.png"];
+		projectile.position = _player.position;
+		[self addChild:projectile];
+		
+		// Determine where we wish to shoot the projectile to
+		int realX;
+		
+		// Are we shooting to the left or right?
+		CGPoint diff = ccpSub(touchLocation, _player.position);
+		if(diff.x > 0) {
+			realX = (_tileMap.mapSize.width * _tileMap.tileSize.width) + (projectile.contentSize.width / 2);
+		}else {
+			realX = -(_tileMap.mapSize.width * _tileMap.tileSize.width) - (projectile.contentSize.width / 2);
+		}
+		float ratio = (float) diff.y / (float) diff.x;
+		int realY = ((realX - projectile.position.x) * ratio) + projectile.position.y;
+		CGPoint realDest = ccp(realX, realY);
+		
+		// Determine the length of how far we're shooting
+		int offRealX = realX - projectile.position.x;
+		int offRealY = realY - projectile.position.y;
+		float length = sqrtf((offRealX * offRealX) + (offRealY * offRealY));
+		float velocity = 480/1; /// 480 pixels/1sec
+		float realMoveDuration = length / velocity;
+		
+		// Move projectile to actual endpoint
+		id actionMoveDone = [CCCallFuncN actionWithTarget:self selector:@selector(projectileMoveFinished:)];
+		[projectile runAction:
+		 [CCSequence actionOne:[CCMoveTo actionWithDuration:realMoveDuration
+												   position:realDest]
+						   two:actionMoveDone]];		
+		
+		[self.projectiles addObject:projectile];
+		
 	}
+}
+
+- (void) projectileMoveFinished:(id)sender {
+	CCSprite *sprite = (CCSprite *)sender;
+	[self removeChild:sprite cleanup:YES];
 	
-	[self setViewpointCenter:_player.position];
+	[self.projectiles removeObject:sprite];
 }
 
 - (void) setViewpointCenter:(CGPoint)position {
@@ -260,6 +346,54 @@
 	// Use our animation method and
 	// start the enemy moving toward the player
 	[self animateEnemy:enemy];
+	
+	[self.enemies addObject:enemy];
+}
+
+- (void) testCollisions:(ccTime)dt {
+	NSMutableArray *projectilesToDelete = [[NSMutableArray alloc] init];
+	
+	// iterate through projectiles
+	for(CCSprite *projectile in self.projectiles) {
+		CGRect projectileRect = CGRectMake(
+			projectile.position.x - (projectile.contentSize.width/2),
+			projectile.position.y - (projectile.contentSize.height/2),
+			projectile.contentSize.width,
+			projectile.contentSize.height);
+		
+		NSMutableArray *targetsToDelete = [[NSMutableArray alloc] init];
+		
+		// iterate through enemies, see if any intersect with current projectile
+		for(CCSprite *target in self.enemies) {
+			CGRect targetRect = CGRectMake(
+				target.position.x - (target.contentSize.width/2),
+				target.position.y - (target.contentSize.height/2),
+				target.contentSize.width,
+				target.contentSize.height);
+			
+			if(CGRectIntersectsRect(projectileRect, targetRect)) {
+				[targetsToDelete addObject:target];
+			}
+		}
+		
+		// delete all hit enemies
+		for (CCSprite *target in targetsToDelete) {
+			[self.enemies removeObject:target];
+			[self removeChild:target cleanup:YES];
+		}
+		
+		if (targetsToDelete.count > 0) {
+			// add the projectile to the list of one to remove
+			[projectilesToDelete addObject:projectile];
+		}
+	}
+	
+	// remove all the projectiles that hit.
+	for(CCSprite *projectile in projectilesToDelete) {
+		[self.projectiles removeObject:projectile];
+		[self removeChild:projectile cleanup:YES];
+	}
+	
 }
 
 // on "dealloc" you need to release all your retained objects
