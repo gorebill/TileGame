@@ -15,6 +15,8 @@
 
 #import "SimpleAudioEngine.h"
 
+#import "GameOverScene.h"
+
 @interface HelloWorldHud()
 // if you are setting your deployment target for iOS 5.0 or later then
 // replace "unsafe_unretained" with "weak" which is then auto set to nil by
@@ -123,7 +125,7 @@
 	enemy.rotation = cocosAngle;
 	
 	// Create the actions
-	id actionMove = [CCMoveBy actionWithDuration:actualDuration position:ccpMult(ccpNormalize(ccpSub(_player.position, enemy.position)), 10)];
+	id actionMove = [CCMoveBy actionWithDuration:actualDuration position:ccpMult(ccpNormalize(ccpSub(_player.position, enemy.position)), 2)];
 	
 	id actionMoveDone = [CCCallFuncN actionWithTarget:self selector:@selector(enemyMoveFinished:)];
 	
@@ -207,6 +209,12 @@
 	return YES;
 }
 
+- (void) win {
+	GameOverScene *gameOverScene = [GameOverScene node];
+	[gameOverScene.layer.label setString:@"You Win!"];
+	[[CCDirector sharedDirector] replaceScene:gameOverScene];
+}
+
 - (void) setPlayerPosition:(CGPoint)position {
 	
 	CGPoint tileCoord = [self tileCoordForPosition:position];
@@ -229,6 +237,10 @@
 				
 				self.numCollected++;
 				[_hud numCollectedChanged:_numCollected];
+				
+				if(self.numCollected == 3) {
+					[self win];
+				}
 			}
 		}
 	}
@@ -394,6 +406,24 @@
 		[self removeChild:projectile cleanup:YES];
 	}
 	
+	for(CCSprite *target in _enemies) {
+		CGRect targetRect = CGRectMake(
+			target.position.x - (target.contentSize.width / 2),
+			target.position.y - (target.contentSize.height / 2),
+			target.contentSize.width,
+			target.contentSize.height);
+		
+		if(CGRectContainsPoint(targetRect, _player.position)) {
+			[self lose];
+		}
+	}
+	
+}
+
+- (void) lose {
+	GameOverScene *gameOverScene = [GameOverScene node];
+	[gameOverScene.layer.label setString:@"You Lose"];
+	[[CCDirector sharedDirector] replaceScene:gameOverScene];
 }
 
 // on "dealloc" you need to release all your retained objects

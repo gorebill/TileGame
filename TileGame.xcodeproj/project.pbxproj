@@ -151,6 +151,7 @@
 		1B421BF916D3F2090086C7C3 /* projectile-button-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BF516D3F2090086C7C3 /* projectile-button-off.png */; };
 		1B421BFA16D3F2090086C7C3 /* projectile-button-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BF616D3F2090086C7C3 /* projectile-button-on.png */; };
 		1B421BFB16D3F2090086C7C3 /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B421BF716D3F2090086C7C3 /* Projectile.png */; };
+		1B421BFE16D4F5CA0086C7C3 /* GameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B421BFD16D4F5CA0086C7C3 /* GameOverScene.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -444,6 +445,8 @@
 		1B421BF516D3F2090086C7C3 /* projectile-button-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "projectile-button-off.png"; path = "Resources/projectile-button-off.png"; sourceTree = "<group>"; };
 		1B421BF616D3F2090086C7C3 /* projectile-button-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "projectile-button-on.png"; path = "Resources/projectile-button-on.png"; sourceTree = "<group>"; };
 		1B421BF716D3F2090086C7C3 /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Projectile.png; path = Resources/Projectile.png; sourceTree = "<group>"; };
+		1B421BFC16D4F5C90086C7C3 /* GameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverScene.h; sourceTree = "<group>"; };
+		1B421BFD16D4F5CA0086C7C3 /* GameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -508,6 +511,8 @@
 				1B421BDA16D36CA50086C7C3 /* HelloWorldLayer.m */,
 				1B421BDC16D36CA50086C7C3 /* IntroLayer.h */,
 				1B421BDD16D36CA50086C7C3 /* IntroLayer.m */,
+				1B421BFC16D4F5C90086C7C3 /* GameOverScene.h */,
+				1B421BFD16D4F5CA0086C7C3 /* GameOverScene.m */,
 				1B421A4916D36CA20086C7C3 /* Resources */,
 				1B421A6116D36CA30086C7C3 /* libs */,
 				1B421BD216D36CA50086C7C3 /* Supporting Files */,
@@ -1102,6 +1107,7 @@
 				1B421BD816D36CA50086C7C3 /* AppDelegate.m in Sources */,
 				1B421BDB16D36CA50086C7C3 /* HelloWorldLayer.m in Sources */,
 				1B421BDE16D36CA50086C7C3 /* IntroLayer.m in Sources */,
+				1B421BFE16D4F5CA0086C7C3 /* GameOverScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -38,17 +38,17 @@
     <property name="Enemy" value="1"/>
    </properties>
   </object>
-  <object name="EnemySpawn4" x="342" y="557">
+  <object name="EnemySpawn4" x="434" y="734">
    <properties>
     <property name="Enemy" value="1"/>
    </properties>
   </object>
-  <object name="EnemySpawn5" x="472" y="142">
+  <object name="EnemySpawn5" x="637" y="35">
    <properties>
     <property name="Enemy" value="1"/>
    </properties>
   </object>
-  <object name="EnemySpawn6" x="466" y="469">
+  <object name="EnemySpawn6" x="649" y="509">
    <properties>
     <property name="Enemy" value="1"/>
    </properties>
